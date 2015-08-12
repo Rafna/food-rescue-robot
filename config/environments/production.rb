@@ -1,4 +1,7 @@
 Webapp::Application.configure do
+  config.eager_load = true
+  config.assets.js_compressor = :uglifier
+
   # Settings specified here will take precedence over those in config/application.rb
   config.time_zone = 'Mountain Time (US & Canada)'
 

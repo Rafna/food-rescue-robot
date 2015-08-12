@@ -1,4 +1,9 @@
 class TransportType < ActiveRecord::Base
-  attr_accessible :name
   default_scope { where(active:true) }
+
+  private
+  
+  def transport_type_params
+    params.require(:transport_type).permit(:name)
+  end
 end

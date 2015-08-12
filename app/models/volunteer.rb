@@ -5,11 +5,6 @@ class Volunteer < ActiveRecord::Base
   has_many :absences
   has_many :regions, :through => :assignments
   belongs_to :requested_region, :class_name => "Region"
-  attr_accessible :pre_reminders_too, :region_ids, :password, :password_confirmation, 
-    :remember_me, :admin_notes, :email, :has_car, :is_disabled, :name,
-    :on_email_list, :phone, :pickup_prefs, :preferred_contact, :transport, :sms_too, 
-    :transport_type, :cell_carrier, :cell_carrier_id, :transport_type_id, :photo, :get_sncs_email, 
-    :assigned, :requested_region_id, :authentication_token
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_attached_file :photo, :styles => { :thumb => "50x50", :small => "200x200", :medium => "500x500" }
@@ -167,6 +162,15 @@ class Volunteer < ActiveRecord::Base
 
 
   private
+
+  def volunteer_params
+    params.require(:volunteer).permit(:pre_reminders_too, :region_ids, :password, 
+      :password_confirmation, :remember_me, :admin_notes, :email, :has_car, 
+      :is_disabled, :name, :on_email_list, :phone, :pickup_prefs, :preferred_contact, 
+      :transport, :sms_too, :transport_type, :cell_carrier, :cell_carrier_id, 
+      :transport_type_id, :photo, :get_sncs_email, :assigned, :requested_region_id, 
+      :authentication_token)
+  end
 
   def generate_authentication_token
     loop do

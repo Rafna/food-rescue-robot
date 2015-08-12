@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.5'
 
 # the base rails libraries
-gem 'rails', '~> 3.2.16'
+gem 'rails', '~> 4.2.3'
 
 # for talking to the sqlite3 on-disk database
 gem 'pg'
@@ -13,8 +13,8 @@ gem 'json'
 
 # Gems used only for assets and not required in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 5.0.3'
+  gem 'coffee-rails', '~> 4.1.0'
   gem 'therubyracer', :platforms => :ruby
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'uglifier', '>= 1.0.3'
@@ -39,7 +39,7 @@ gem 'twitter-bootstrap-rails'
 gem 'rails_bootstrap_navbar'
 
 # lets us use the ubiquitous jquery javascript library
-gem 'jquery-rails', '2.1.4'
+gem 'jquery-rails', '3.1.3'
 
 # dynamic in-place editing for some admin tables
 gem 'active_scaffold'
@@ -71,7 +71,7 @@ gem 'gmaps4rails', "1.5.6"
 gem "highcharts-rails", "~> 3.0.0"
 
 # gives us pretty data tables
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails', "3.0.0"
 
 # pretty select form elements
 #gem 'select2-rails'

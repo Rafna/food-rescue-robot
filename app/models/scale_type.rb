@@ -1,5 +1,4 @@
 class ScaleType < ActiveRecord::Base
-  attr_accessible :name, :region_id, :weight_unit
   has_many :logs
   belongs_to :region
 
@@ -8,4 +7,11 @@ class ScaleType < ActiveRecord::Base
   def self.regional(region_id)
     where(:region_id=>region_id)
   end
+
+  private
+  
+  def scale_type_params
+    params.require(:scale_type).permit(:name, :region_id, :weight_unit)
+  end
+
 end

@@ -1,7 +1,6 @@
 class Assignment < ActiveRecord::Base
   belongs_to :volunteer
   belongs_to :region
-  attr_accessible :admin
 
   # CRUD-level restrictions
   def authorized_for_update?
@@ -25,6 +24,12 @@ class Assignment < ActiveRecord::Base
     volunteer.assigned = true
     volunteer.save
     return true
+  end
+
+  private
+  
+  def assignment_params
+    params.require(:assignment).permit(:admin)
   end
 
 end

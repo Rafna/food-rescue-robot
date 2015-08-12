@@ -19,11 +19,6 @@ class Location < ActiveRecord::Base
 
   validate :detailed_hours_cannot_end_before_start
 
-  attr_accessible :region_id, :address, :twitter_handle, :admin_notes, :contact, :donor_type, :hours, 
-                  :is_donor, :lat, :lng, :name, :public_notes, :recip_category, :website, :receipt_key,
-                  :email, :phone, :equipment_storage_info, :food_storage_info, :entry_info, :exit_info,
-                  :onsite_contact_info, :active, :location_type
-
   def is_donor
     self.location_type == LocationType.invert["Donor"]
   end
@@ -143,7 +138,14 @@ class Location < ActiveRecord::Base
     Location.where("region_id IN (#{rids.join(",")})")
   end
 
-  private 
+  private
+
+  def location_params
+    params.require(:location).permit(:region_id, :address, :twitter_handle, 
+      :admin_notes, :contact, :donor_type, :hours, :email, :phone, 
+      :equipment_storage_info, :food_storage_info, :entry_info, :exit_info,
+      :onsite_contact_info, :active, :location_type)
+  end
   
     def detailed_hours_cannot_end_before_start
       (0..6).each do |index|

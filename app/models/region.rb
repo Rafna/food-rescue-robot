@@ -12,9 +12,6 @@ class Region < ActiveRecord::Base
 
   geocoded_by :address, :latitude => :lat, :longitude => :lng   # can also be an IP address
   after_validation :geocode
-  attr_accessible :address, :lat, :lng, :name, :notes, :website, :handbook_url, :welcome_email_text, :splash_html, :title, :tagline, 
-                  :phone, :tax_id, :twitter_key, :twitter_secret, :twitter_token, :twitter_token_secret,
-                  :weight_unit, :time_zone, :logo, :post_pickup_emails, :unschedule_self, :volunteer_coordinator_email
   has_attached_file :logo, :styles => { :thumb => "50x50" }
 
   def active_volunteer_count
@@ -47,6 +44,16 @@ class Region < ActiveRecord::Base
     # for some reason I couldn't get .count to work here :-(
     region_list.each { |r| handbook_count+= 1 if r.has_handbook? }
     handbook_count > 0 
+  end
+
+  private
+
+  def region_params
+    params.require(:region).permit(:address, :lat, :lng, :name, :notes, :website, 
+      :handbook_url, :welcome_email_text, :splash_html, :title, :tagline, 
+      :phone, :tax_id, :twitter_key, :twitter_secret, :twitter_token, 
+      :twitter_token_secret, :weight_unit, :time_zone, :logo, :post_pickup_emails, 
+      :unschedule_self, :volunteer_coordinator_email)
   end
 
 end

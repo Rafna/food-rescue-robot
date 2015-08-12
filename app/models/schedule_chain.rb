@@ -12,13 +12,6 @@ class ScheduleChain < ActiveRecord::Base
   belongs_to :scale_type
   belongs_to :region
 	
-  attr_accessible :region_id, :irregular, :backup, :transport_type_id,
-		:day_of_week, :detailed_start_time, :detailed_stop_time, 
-	 	:detailed_date, :frequency, :temporary, :difficulty_rating, :expected_weight,
-		:hilliness, :schedule_volunteers, :schedule_volunteers_attributes, :scale_type_ids,
-		:schedule_ids, :admin_notes, :public_notes, :schedules, :schedule, :schedule_volunteers,
-    :schedules_attributes, :num_volunteers, :active
-	
   accepts_nested_attributes_for :schedule_volunteers
   accepts_nested_attributes_for :schedules
 
@@ -163,6 +156,17 @@ class ScheduleChain < ActiveRecord::Base
 
   def recipients
     self.recipient_stops.collect{ |rs| rs.location }
+  end
+
+  private
+
+  def schedule_chain_params
+    params.require(:schedule_chain).permit(:region_id, :irregular, :backup, 
+      :transport_type_id, :day_of_week, :detailed_start_time, :detailed_stop_time, 
+      :detailed_date, :frequency, :temporary, :difficulty_rating, :expected_weight,
+      :hilliness, :schedule_volunteers, :schedule_volunteers_attributes, :scale_type_ids,
+      :schedule_ids, :admin_notes, :public_notes, :schedules, :schedule, :schedule_volunteers,
+      :schedules_attributes, :num_volunteers, :active)
   end
 
 end
