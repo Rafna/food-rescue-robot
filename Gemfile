@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.5'
 
 # the base rails libraries
 gem 'rails', '~> 3.2.16'
@@ -22,6 +23,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'awesome_print'
 end
 
 group :test do
