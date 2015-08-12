@@ -48,7 +48,7 @@ gem 'active_scaffold'
 gem 'geocoder'
 
 # handles authentication
-gem 'devise', '~> 3.2.0'
+gem 'devise', '~> 3.4.0'
 
 # alternative webserver (>thin start)
 gem 'thin'

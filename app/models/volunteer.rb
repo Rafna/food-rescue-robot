@@ -11,16 +11,15 @@ class Volunteer < ActiveRecord::Base
   default_scope { order('volunteers.name ASC').where(active:true) }
 
   has_many :schedule_volunteers
-  has_many :schedule_chains, :through=>:schedule_volunteers, 
-           :conditions=>{"schedule_volunteers.active"=>true}
-  has_many :prior_schedules, :through=>:schedule_volunteers, 
-           :conditions=>{"schedule_volunteers.active"=>false}, :class_name=>"ScheduleChain"
-
+  has_many :schedule_chains, -> { where("schedule_volunteers.active"=>true) },
+    :through=>:schedule_volunteers
+  has_many :prior_schedules, -> { where("schedule_volunteers.active"=>false) }, 
+    :class_name=>"ScheduleChain", :through=>:schedule_volunteers
   has_many :log_volunteers
-  has_many :logs, :through=>:log_volunteers,
-           :conditions=>{"log_volunteers.active"=>true}
-  has_many :prior_logs, :through=>:log_volunteers,
-           :conditions=>{"log_volunteers.active"=>false}, :class_name=>"Log"
+  has_many :logs, -> { where("log_volunteers.active"=>true) },
+    :through=>:log_volunteers
+  has_many :prior_logs, -> { where("log_volunteers.active"=>false) }, :class_name=>"Log", 
+    :through=>:log_volunteers
 
   before_save :ensure_authentication_token
   after_save :auto_assign_region
