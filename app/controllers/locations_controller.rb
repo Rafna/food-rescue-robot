@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
       if @loc.is_donor
         @logs = Log.at(@loc)
       else 
-        @logs = Log.at(@loc).keep_if{ |x| x.weight_sum.to_f > 0 } 
+        @logs = Log.at(@loc).find_all{ |x| x.weight_sum.to_f > 0 } 
       end
       render :hud
     else

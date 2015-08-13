@@ -2,9 +2,9 @@ class Log < ActiveRecord::Base
   belongs_to :schedule_chain
   has_many :log_volunteers
   has_many :volunteers, -> { where("log_volunteers.active"=>true) },
-    :through => :log_volunteers,
+    :through => :log_volunteers
   has_many :inactive_volunteers, -> { where("log_volunteers.active"=>false) },
-    :through => :log_volunteers,
+    :through => :log_volunteers
   has_many :log_recipients
   has_many :recipients, :through => :log_recipients
   belongs_to :donor, :class_name => "Location", :foreign_key => "donor_id"

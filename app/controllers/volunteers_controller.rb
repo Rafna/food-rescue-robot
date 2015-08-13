@@ -32,7 +32,7 @@ class VolunteersController < ApplicationController
   end
 
   def shiftless
-    @volunteers = Volunteer.all.keep_if do |v|
+    @volunteers = Volunteer.all.find_all do |v|
       ((v.region_ids & current_volunteer.region_ids).length > 0) and v.schedule_chains.length == 0
     end
     @header = "Shiftless Volunteers"
@@ -52,7 +52,7 @@ class VolunteersController < ApplicationController
   end
 
   def need_training
-    @volunteers = Volunteer.all.keep_if{ |v|
+    @volunteers = Volunteer.all.find_all{ |v|
       ((v.region_ids & current_volunteer.region_ids).length > 0) and v.needs_training?
     }
     @header = "Volunteers Needing Training"
@@ -331,7 +331,7 @@ class VolunteersController < ApplicationController
     @num_covered = 0
     @biggest = nil
     @earliest = nil
-    @bike = TransportType.where("name = 'Bike'").shift
+    @bike = TransportType.where("name = 'Bike'").first
     @by_month = {}
     @pickups.each{ |l|
       l.transport_type = @bike if l.transport_type.nil?

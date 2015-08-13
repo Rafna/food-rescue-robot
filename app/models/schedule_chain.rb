@@ -28,7 +28,7 @@ class ScheduleChain < ActiveRecord::Base
   def self.unassigned_in_regions region_id_list
     conditions = {}
     conditions[:region_id] = region_id_list if region_id_list.length > 0
-    self.includes(:schedule_volunteers).keep_if { |schedule| 
+    self.includes(:schedule_volunteers).find_all { |schedule| 
         schedule.volunteers.count == 0 and schedule.functional?
     }
 		conditions
@@ -52,7 +52,7 @@ class ScheduleChain < ActiveRecord::Base
   def self.open_in_regions region_id_list
     schedules = ScheduleChain.where(:irregular=>false).where(:region_id=>region_id_list) if region_id_list.length > 0
     return [] if schedules.nil?
-    schedules.keep_if do |schedule|
+    schedules.find_all do |schedule|
       unless not schedule.functional?
       	schedule.temporary or not schedule.covered?
       else
