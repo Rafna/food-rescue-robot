@@ -12,13 +12,11 @@ gem 'pg'
 gem 'json'
 
 # Gems used only for assets and not required in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 5.0.3'
-  gem 'coffee-rails', '~> 4.1.0'
-  gem 'therubyracer', :platforms => :ruby
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   '~> 5.0.3'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'therubyracer', :platforms => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'uglifier', '>= 1.0.3'
 
 group :development do
   gem 'better_errors'
