@@ -75,7 +75,7 @@ class VolunteersController < ApplicationController
   end
 
   def show
-    @v = Volunteer.find(params[:id])
+    @v = Volunteer.where(id: params[:id]).first
     unless current_volunteer.super_admin? or (current_volunteer.region_ids & @v.region_ids).length > 0
       flash[:error] = "Can't view volunteer for a region you're not assigned to..."
       redirect_to(root_path)
@@ -84,7 +84,7 @@ class VolunteersController < ApplicationController
   end
 
   def destroy
-    @v = Volunteer.find(params[:id])
+    @v = Volunteer.where(id: params[:id]).first
     return unless check_permissions(@v)
     @v.active = false
     @v.save

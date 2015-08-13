@@ -1,5 +1,6 @@
 Webapp::Application.configure do
   config.eager_load = false
+  config.active_record.raise_in_transactional_callbacks = true
 
   # Settings specified here will take precedence over those in config/application.rb
   config.time_zone = 'Mountain Time (US & Canada)'
