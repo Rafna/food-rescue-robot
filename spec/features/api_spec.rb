@@ -14,20 +14,20 @@ describe 'api' do
   it 'can sign in' do
     v = create(:volunteer_with_assignment)
     auth_params = get_auth_params(v)
-    auth_params["volunteer_token"].should_not be_nil
+    expect(auth_params["volunteer_token"]).not_to be_nil
   end
 
   it 'can sign out' do
     v = create(:volunteer_with_assignment)
     auth_params = get_auth_params(v)
-    auth_params["volunteer_token"].should_not be_nil
+    expect(auth_params["volunteer_token"]).not_to be_nil
 
     delete "/volunteers/sign_out.json", auth_params
-    last_response.status.should eq(204)
+    expect(last_response.status).to eq(204)
 
     auth_params2 = get_auth_params(v)
-    auth_params2["volunteer_token"].should_not be_nil
-    auth_params2["volunteer_token"].should_not eq(auth_params["volunteer_token"])
+    expect(auth_params2["volunteer_token"]).not_to be_nil
+    expect(auth_params2["volunteer_token"]).not_to eq(auth_params["volunteer_token"])
   end
 
   # GET /logs.json
@@ -38,8 +38,8 @@ describe 'api' do
     get "/logs.json", auth_params
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
-    json.should be_an(Array)
-    json.length.should eq(1)
+    expect(json).to be_an(Array)
+    expect(json.length).to eq(1)
   end
 
   # GET /logs/:id.json
@@ -51,8 +51,8 @@ describe 'api' do
     get "/logs/#{l.id}.json", auth_params
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
-    json.should be_an(Hash)
-    json["log"]["id"].should eq(l.id)
+    expect(json).to be_an(Hash)
+    expect(json["log"]["id"]).to eq(l.id)
   end
 
   # GET /logs/:id/take.json
@@ -100,9 +100,9 @@ describe 'api' do
     pp last_response.body
     expect(last_response.status).to eq(200)
     check = Log.find(l.id)
-    check.complete.should be_true
-    check.log_parts.first.weight.should eq(42.0)
-    check.log_parts.first.count.should eq(5)
+    expect(check.complete).to be_truthy
+    expect(check.log_parts.first.weight).to eq(42.0)
+    expect(check.log_parts.first.count).to eq(5)
   end
 
   # GET /locations/:id.json
@@ -115,7 +115,7 @@ describe 'api' do
     puts last_response.body
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
-    json.should be_an(Hash)
+    expect(json).to be_an(Hash)
   end
 
   it "will reject an unauthenticated request" do
