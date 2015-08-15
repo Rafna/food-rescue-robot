@@ -1,4 +1,10 @@
 class Region < ActiveRecord::Base
+  attr_accessor :address, :lat, :lng, :name, :notes, :website, 
+      :handbook_url, :welcome_email_text, :splash_html, :title, :tagline, 
+      :phone, :tax_id, :twitter_key, :twitter_secret, :twitter_token, 
+      :twitter_token_secret, :weight_unit, :time_zone, :logo, :post_pickup_emails, 
+      :unschedule_self, :volunteer_coordinator_email
+
   has_many :assignments
   has_many :volunteers, :through => :assignments
   has_many :food_types

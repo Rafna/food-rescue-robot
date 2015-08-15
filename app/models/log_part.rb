@@ -1,7 +1,8 @@
 class LogPart < ActiveRecord::Base
+  attr_accessor :required, :weight, :count, :description, :food_type_id, :log_id
+  
   belongs_to :log
   belongs_to :food_type
-  attr_accessor :required, :weight, :count, :description, :food_type_id, :log_id
 
   # weight in db is always lbs, so convert to what the user expects to see (in the units of the scale)
   def scale_weight
