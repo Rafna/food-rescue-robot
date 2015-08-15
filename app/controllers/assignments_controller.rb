@@ -31,4 +31,11 @@ class AssignmentsController < ApplicationController
     redirect_to(root_path) unless current_volunteer.any_admin?
   end
 
+
+  private
+  
+  def assignment_params
+    params.require(:assignment).permit(:admin)
+  end
+
 end 

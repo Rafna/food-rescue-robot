@@ -7,4 +7,10 @@ class TransportTypesController < ApplicationController
     end
   end
 
+
+  private
+  
+  def transport_type_params
+    params.require(:transport_type).permit(:name)
+  end
 end 

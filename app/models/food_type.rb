@@ -10,10 +10,4 @@ class FoodType < ActiveRecord::Base
     where(:region_id=>region_id)
   end
 
-  private
-  
-  def food_type_params
-    params.require(:food_type).permit(:name, :region_id)
-  end
-
 end

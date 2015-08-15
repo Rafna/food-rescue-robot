@@ -162,15 +162,6 @@ class Volunteer < ActiveRecord::Base
 
   private
 
-  def volunteer_params
-    params.require(:volunteer).permit(:pre_reminders_too, :region_ids, :password, 
-      :password_confirmation, :remember_me, :admin_notes, :email, :has_car, 
-      :is_disabled, :name, :on_email_list, :phone, :pickup_prefs, :preferred_contact, 
-      :transport, :sms_too, :transport_type, :cell_carrier, :cell_carrier_id, 
-      :transport_type_id, :photo, :get_sncs_email, :assigned, :requested_region_id, 
-      :authentication_token)
-  end
-
   def generate_authentication_token
     loop do
       token = Devise.friendly_token

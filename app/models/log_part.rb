@@ -1,6 +1,7 @@
 class LogPart < ActiveRecord::Base
   belongs_to :log
   belongs_to :food_type
+  attr_accessible :required, :weight, :count, :description, :food_type_id, :log_id
 
   # weight in db is always lbs, so convert to what the user expects to see (in the units of the scale)
   def scale_weight
@@ -12,13 +13,6 @@ class LogPart < ActiveRecord::Base
     else
       self.weight
     end
-  end
-
-  private
-
-  def log_part_params
-    params.require(:log_part).permit(:required, :weight, :count, :description, 
-      :food_type_id, :log_id)
   end
 
 end

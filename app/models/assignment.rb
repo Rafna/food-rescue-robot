@@ -26,10 +26,4 @@ class Assignment < ActiveRecord::Base
     return true
   end
 
-  private
-  
-  def assignment_params
-    params.require(:assignment).permit(:admin)
-  end
-
 end

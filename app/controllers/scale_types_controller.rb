@@ -76,4 +76,11 @@ class ScaleTypesController < ApplicationController
     end
     return true
   end
+
+
+  private
+  
+  def scale_type_params
+    params.require(:scale_type).permit(:name, :region_id, :weight_unit)
+  end
 end

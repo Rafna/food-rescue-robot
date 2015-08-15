@@ -8,10 +8,4 @@ class ScaleType < ActiveRecord::Base
     where(:region_id=>region_id)
   end
 
-  private
-  
-  def scale_type_params
-    params.require(:scale_type).permit(:name, :region_id, :weight_unit)
-  end
-
 end

@@ -76,4 +76,11 @@ class FoodTypesController < ApplicationController
     return true
   end
 
+
+  private
+  
+  def food_type_params
+    params.require(:food_type).permit(:name, :region_id)
+  end
+
 end 

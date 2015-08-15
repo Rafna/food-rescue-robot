@@ -165,7 +165,7 @@ class LogsController < ApplicationController
       redirect_to(root_path)
       return
     end
-    parse_and_create_log_parts(params,@log)
+    parse_and_create_log_parts(log_params,@log)
     finalize_log(@log)
     if @log.save
       flash[:notice] = "Created successfully."
@@ -227,7 +227,7 @@ class LogsController < ApplicationController
       return
     end
 
-    parse_and_create_log_parts(params,@log)
+    parse_and_create_log_parts(log_params,@log)
     if @log.update_attributes(params[:log])
       finalize_log(@log)
       if @log.save
@@ -377,37 +377,47 @@ class LogsController < ApplicationController
 
   private
 
-    def parse_and_create_log_parts(params,log)
-      ret = []
-      params["log_parts"].each{ |dc,lpdata|
-        lpdata["weight"] = nil if lpdata["weight"].strip == ""
-        lpdata["count"] = nil if lpdata["count"].strip == ""
-        next if lpdata["id"].nil? and lpdata["weight"].nil? and lpdata["count"].nil?
-        lp = lpdata["id"].nil? ? LogPart.new : LogPart.find(lpdata["id"].to_i)
-        lp.count = lpdata["count"]
-        lp.description = lpdata["description"]
-        lp.food_type_id = lpdata["food_type_id"].to_i
-        lp.log_id = log.id
-        lp.weight = lpdata["weight"].to_f
-        ret.push lp
-        lp.save
-      } unless params["log_parts"].nil?
-      ret
-    end
+  def log_params
+    params.require(:log).permit(:region_id, :donor_id, :why_zero,
+      :food_type_id, :transport_type_id, :flag_for_admin, :notes, 
+      :num_reminders, :transport, :when, :scale_type_id, :hours_spent,
+      :log_volunteers_attributes, :weight_unit, :volunteers_attributes,
+      :schedule_chain_id, :recipients_attributes, :log_recipients_attributes, 
+      :log_volunteers_attributes, :id, :created_at, :updated_at, :complete, 
+      :recipient_ids, :volunteer_ids, :num_volunteers)
+  end
 
-    def finalize_log(log)
-      # mark as complete if deserving
-      filled_count = 0
-      required_unfilled = 0
-      log.log_parts.each{ |lp|
-        required_unfilled += 1 if lp.required and lp.weight.nil? and lp.count.nil?
-        filled_count += 1 unless lp.weight.nil? and lp.count.nil?
-      }
-      log.complete = filled_count > 0 and required_unfilled == 0
-    end
+  def parse_and_create_log_parts(params,log)
+    ret = []
+    params["log_parts"].each{ |dc,lpdata|
+      lpdata["weight"] = nil if lpdata["weight"].strip == ""
+      lpdata["count"] = nil if lpdata["count"].strip == ""
+      next if lpdata["id"].nil? and lpdata["weight"].nil? and lpdata["count"].nil?
+      lp = lpdata["id"].nil? ? LogPart.new : LogPart.find(lpdata["id"].to_i)
+      lp.count = lpdata["count"]
+      lp.description = lpdata["description"]
+      lp.food_type_id = lpdata["food_type_id"].to_i
+      lp.log_id = log.id
+      lp.weight = lpdata["weight"].to_f
+      ret.push lp
+      lp.save
+    } unless params["log_parts"].nil?
+    ret
+  end
 
-    def admin_only
-      redirect_to(root_path) unless current_volunteer.any_admin?
-    end
+  def finalize_log(log)
+    # mark as complete if deserving
+    filled_count = 0
+    required_unfilled = 0
+    log.log_parts.each{ |lp|
+      required_unfilled += 1 if lp.required and lp.weight.nil? and lp.count.nil?
+      filled_count += 1 unless lp.weight.nil? and lp.count.nil?
+    }
+    log.complete = filled_count > 0 and required_unfilled == 0
+  end
+
+  def admin_only
+    redirect_to(root_path) unless current_volunteer.any_admin?
+  end
 
 end

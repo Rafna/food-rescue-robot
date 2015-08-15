@@ -13,4 +13,11 @@ class CellCarriersController < ApplicationController
   def delete_authorized?(record=nil)
     current_volunteer.super_admin?
   end
+
+
+  private
+  
+  def cell_carrier_params
+    params.require(:cell_carrier).permit(:format, :name)
+  end
 end 

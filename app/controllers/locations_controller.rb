@@ -98,7 +98,7 @@ class LocationsController < ApplicationController
 
   def create
     @location = Location.new(params[:location])
-    @location.populate_detailed_hours_from_form params
+    @location.populate_detailed_hours_from_form location_params
     return unless check_permissions(@location)
     # can't set admin bits from CRUD controls
     if @location.save
@@ -124,7 +124,7 @@ class LocationsController < ApplicationController
 
   def update
     @location = Location.find(params[:id])
-    @location.populate_detailed_hours_from_form params
+    @location.populate_detailed_hours_from_form location_params
     return unless check_permissions(@location)
     # can't set admin bits from CRUD controls
     if @location.update_attributes(params[:location])
@@ -138,6 +138,17 @@ class LocationsController < ApplicationController
       flash[:notice] = "Update failed :("
       render :edit
     end
+  end
+
+
+  private
+
+  def location_params
+    params.require(:location).permit(:region_id, :address, :twitter_handle, 
+      :admin_notes, :contact, :donor_type, :hours, :is_donor, :lat, :lng, :name, 
+      :public_notes, :recip_category, :website, :receipt_key, :email, :phone, 
+      :equipment_storage_info, :food_storage_info, :entry_info, :exit_info,
+      :onsite_contact_info, :active, :location_type)
   end
 
 end 

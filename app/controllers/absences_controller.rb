@@ -110,4 +110,11 @@ class AbsencesController < ApplicationController
     redirect_to(root_path) unless current_volunteer.any_admin?
   end
 
+
+  private
+
+  def absence_params
+    params.require(:absence).permit(:start_date, :stop_date, :volunteer_id, :comments, :volunteer, :active)
+  end
+
 end
