@@ -15,7 +15,7 @@ class Schedule < ActiveRecord::Base
 
   accepts_nested_attributes_for :food_types
 
-  attr_accessible :food_type_ids, :location_id, :public_notes, :admin_notes, :expected_weight,
+  attr_accessor :food_type_ids, :location_id, :public_notes, :admin_notes, :expected_weight,
                   :schedule_chain_id, :position
 
   def is_pickup_stop?
