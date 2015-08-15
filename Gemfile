@@ -31,6 +31,10 @@ group :test do
   gem 'rack-test'
 end
 
+group :development, :test do
+  gem 'pry'
+end
+
 # mobile-friendly template
 gem 'twitter-bootstrap-rails'
 #gem 'bootstrap-sass', '~> 3.2.0'
