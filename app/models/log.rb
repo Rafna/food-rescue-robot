@@ -1,4 +1,6 @@
 class Log < ActiveRecord::Base
+  attr_accessor :volunteer_names#, :volunteer_ids, :recipient_ids, :volunteer_token, :volunteer_email, :format
+
   belongs_to :schedule_chain
   has_many :log_volunteers
   has_many :volunteers, -> { where("log_volunteers.active"=>true) },

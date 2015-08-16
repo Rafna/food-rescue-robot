@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :log_part do
-    required false
+    required true
     food_type { (FoodType.all.count >= 5 ? FoodType.all.sort_by{ rand }.first : create(:food_type)) }
 
     factory :complete_log_part do

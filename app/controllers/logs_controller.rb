@@ -165,7 +165,7 @@ class LogsController < ApplicationController
       redirect_to(root_path)
       return
     end
-    parse_and_create_log_parts(log_params,@log)
+    parse_and_create_log_parts(params, @log)
     finalize_log(@log)
     if @log.save
       flash[:notice] = "Created successfully."
@@ -227,7 +227,7 @@ class LogsController < ApplicationController
       return
     end
 
-    parse_and_create_log_parts(log_params,@log)
+    parse_and_create_log_parts(params, @log)
     if @log.update_attributes(log_params)
       finalize_log(@log)
       if @log.save
@@ -378,13 +378,14 @@ class LogsController < ApplicationController
   private
 
   def log_params
-    params.require(:log).permit(:region_id, :donor_id, :why_zero,
-      :food_type_id, :transport_type_id, :flag_for_admin, :notes, 
-      :num_reminders, :transport, :when, :scale_type_id, :hours_spent,
-      :log_volunteers_attributes, :weight_unit, :volunteers_attributes,
-      :schedule_chain_id, :recipients_attributes, :log_recipients_attributes, 
-      :log_volunteers_attributes, :id, :created_at, :updated_at, :complete, 
-      :recipient_ids, :volunteer_ids, :num_volunteers)
+    params.require(:log).permit(:complete, :created_at, :donor_id, 
+      :flag_for_admin, :hours_spent, :id, :log_recipients_attributes, 
+      :log_volunteers_attributes, :log_volunteers_attributes, :notes, 
+      :num_reminders, :num_volunteers, {recipient_ids: []}, 
+      :recipients_attributes, :region_id, :scale_type_id, :schedule_chain_id, 
+      :transport, :transport_type_id, :updated_at, {volunteer_ids: []}, 
+      {volunteer_names: []}, :volunteers_attributes, :weight_unit, :when, 
+      :why_zero)
   end
 
   def parse_and_create_log_parts(params,log)

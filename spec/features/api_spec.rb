@@ -97,7 +97,9 @@ describe 'api' do
       json["log_parts"][i][:count] = 5
     }
     put "/logs/#{l.id}.json", auth_params.merge(json)
+    json = JSON.parse(last_response.body)
     expect(last_response.status).to eq(200)
+    expect(json["error"]).to eq 0
     l.reload
     expect(l.complete).to be_truthy
     expect(l.log_parts.first.weight).to eq(42.0)
@@ -111,7 +113,6 @@ describe 'api' do
     d = create(:donor, region: r)
     auth_params = get_auth_params(v)
     get "/locations/#{d.id}.json", auth_params
-    puts last_response.body
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
     expect(json).to be_an(Hash)
