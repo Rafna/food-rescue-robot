@@ -1,12 +1,4 @@
 class Log < ActiveRecord::Base
-  attr_accessor :region_id, :donor_id, :why_zero,
-      :food_type_id, :transport_type_id, :flag_for_admin, :notes, 
-      :num_reminders, :transport, :when, :scale_type_id, :hours_spent,
-      :log_volunteers_attributes, :weight_unit, :volunteers_attributes,
-      :schedule_chain_id, :recipients_attributes, :log_recipients_attributes, 
-      :log_volunteers_attributes, :id, :created_at, :updated_at, :complete, 
-      :recipient_ids, :volunteer_ids, :num_volunteers
-      
   belongs_to :schedule_chain
   has_many :log_volunteers
   has_many :volunteers, -> { where("log_volunteers.active"=>true) },

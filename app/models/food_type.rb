@@ -1,6 +1,4 @@
 class FoodType < ActiveRecord::Base
-  attr_accessor :name, :region_id
-
   has_many :schedules, :through => :schedule_parts
   has_many :schedule_parts
   has_many :log_parts

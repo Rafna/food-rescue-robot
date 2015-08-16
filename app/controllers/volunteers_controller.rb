@@ -313,6 +313,8 @@ class VolunteersController < ApplicationController
   end
 
 
+  private
+  
   def volunteer_params
     params.require(:volunteer).permit(:pre_reminders_too, :region_ids, :password, 
       :password_confirmation, :remember_me, :admin_notes, :email, :has_car, 

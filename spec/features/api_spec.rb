@@ -1,14 +1,12 @@
 require 'spec_helper'
-require 'pp'
 
 describe 'api' do
 
-  def get_auth_params(u)
-    data = {email: u.email,password: u.password}
-    post '/volunteers/sign_in.json', data
+  def get_auth_params(volunteer)
+    post '/volunteers/sign_in.json', {email: volunteer.email, password: volunteer.password}
     expect(last_response.status).to eq(201)
     json = JSON.parse(last_response.body)
-    {"volunteer_token" => json["authentication_token"], "volunteer_email" => u.email }
+    {"volunteer_token" => json["authentication_token"], "volunteer_email" => volunteer.email }
   end
 
   it 'can sign in' do
@@ -32,9 +30,12 @@ describe 'api' do
 
   # GET /logs.json
   it "can get a list of logs" do
+    # allow_any_instance_of(Location).to receive(:geocode)
+    # allow_any_instance_of(Region).to receive(:geocode)
     create(:log)
     v = create(:volunteer_with_assignment)
     auth_params = get_auth_params(v)
+    
     get "/logs.json", auth_params
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
@@ -46,7 +47,7 @@ describe 'api' do
   it "can look up a log" do
     v = create(:volunteer_with_assignment)
     r = v.assignments.first.region
-    l = create(:log,region:r)
+    l = create(:log, region: r)
     auth_params = get_auth_params(v)
     get "/logs/#{l.id}.json", auth_params
     expect(last_response.status).to eq(200)
@@ -59,7 +60,7 @@ describe 'api' do
   it "can cover a shift" do
     v = create(:volunteer_with_assignment)
     r = v.assignments.first.region
-    l = create(:log,region:r)
+    l = create(:log, region: r)
     auth_params = get_auth_params(v)
     get "/logs/#{l.id}/take.json", auth_params
     expect(last_response.status).to eq(200)
@@ -71,7 +72,7 @@ describe 'api' do
   it "can take a open shift" do
     v = create(:volunteer_with_assignment)
     r = v.assignments.first.region
-    s = create(:schedule_chain,region:r)
+    s = create(:schedule_chain, region: r)
     auth_params = get_auth_params(v)
     get "/schedule_chains/#{s.id}/take.json", auth_params
     expect(last_response.status).to eq(200)
@@ -83,33 +84,31 @@ describe 'api' do
   it "can update a log" do
     v = create(:volunteer_with_assignment)
     r = v.assignments.first.region
-    l = create(:log,region:r)
+    l = create(:log, region: r)
     l.volunteers << v
     l.save
 
-    auth_params = get_a uth_params(v)
+    auth_params = get_auth_params(v)
     get "/logs/#{l.id}.json", auth_params
     expect(last_response.status).to eq(200)
     json = JSON.parse(last_response.body)
-    pp json
     json["log_parts"].each{ |i,lp|
       json["log_parts"][i][:weight] = 42.0
       json["log_parts"][i][:count] = 5
     }
     put "/logs/#{l.id}.json", auth_params.merge(json)
-    pp last_response.body
     expect(last_response.status).to eq(200)
-    check = Log.find(l.id)
-    expect(check.complete).to be_truthy
-    expect(check.log_parts.first.weight).to eq(42.0)
-    expect(check.log_parts.first.count).to eq(5)
+    l.reload
+    expect(l.complete).to be_truthy
+    expect(l.log_parts.first.weight).to eq(42.0)
+    expect(l.log_parts.first.count).to eq(5)
   end
 
   # GET /locations/:id.json
   it "can look up a donor or recipient" do
     v = create(:volunteer_with_assignment)
     r = v.assignments.first.region
-    d = create(:donor,region:r)
+    d = create(:donor, region: r)
     auth_params = get_auth_params(v)
     get "/locations/#{d.id}.json", auth_params
     puts last_response.body

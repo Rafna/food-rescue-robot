@@ -15,8 +15,8 @@ FactoryGirl.define do
     hilliness { rand(3) }
 
     after(:create) do |s|
-      d = create(:donation_schedule,schedule_chain:s)
-      r = create(:recipient_schedule,schedule_chain:s)
+      d = create(:donation_schedule, schedule_chain: s)
+      r = create(:recipient_schedule, schedule_chain: s)
     end
   end
 end

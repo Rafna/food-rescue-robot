@@ -228,7 +228,7 @@ class LogsController < ApplicationController
     end
 
     parse_and_create_log_parts(log_params,@log)
-    if @log.update_attributes(params[:log])
+    if @log.update_attributes(log_params)
       finalize_log(@log)
       if @log.save
         if @log.complete

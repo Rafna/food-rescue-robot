@@ -1,7 +1,4 @@
 class Schedule < ActiveRecord::Base
-  attr_accessor :food_type_ids, :location_id, :public_notes, :admin_notes, 
-    :expected_weight, :schedule_chain_id, :position
-
   include RankedModel
 
   has_many :volunteers, :through => :schedule_volunteers

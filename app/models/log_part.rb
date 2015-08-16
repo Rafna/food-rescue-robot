@@ -1,6 +1,4 @@
 class LogPart < ActiveRecord::Base
-  attr_accessor :required, :weight, :count, :description, :food_type_id, :log_id
-  
   belongs_to :log
   belongs_to :food_type
 

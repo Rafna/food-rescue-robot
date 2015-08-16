@@ -1,6 +1,4 @@
 class Assignment < ActiveRecord::Base
-  attr_accessor :admin
-  
   belongs_to :volunteer
   belongs_to :region
 

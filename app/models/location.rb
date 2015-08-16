@@ -1,9 +1,5 @@
 class Location < ActiveRecord::Base
-  attr_accessor :region_id, :address, :twitter_handle, :admin_notes, :contact, 
-    :donor_type, :hours, :is_donor, :lat, :lng, :name, :public_notes, 
-    :recip_category, :website, :receipt_key, :email, :phone, :equipment_storage_info, 
-    :food_storage_info, :entry_info, :exit_info, :onsite_contact_info, :active, 
-    :location_type
+  attr_accessor :is_donor
 
   LocationType = {0 => "Recipient", 1 => "Donor", 2 => "Hub", 3 => "Seller", 4 => "Buyer"}
   PickupLocationTypes = [1,2,3]
