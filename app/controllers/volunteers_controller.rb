@@ -154,7 +154,7 @@ class VolunteersController < ApplicationController
     # can't set admin bits from CRUD controls
     params[:volunteer].delete(:admin) 
     params[:volunteer][:assignments].each{ |a| a.delete(:admin) } unless params[:volunteer][:assignments].nil?
-    if @volunteer.update_attributes(params[:volunteer])
+    if @volunteer.update_attributes(volunteer_params)
       flash[:notice] = "Updated Successfully."
       unless session[:my_return_to].nil?
         redirect_to(session[:my_return_to])

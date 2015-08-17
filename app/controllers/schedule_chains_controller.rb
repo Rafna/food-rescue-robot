@@ -139,7 +139,7 @@ class ScheduleChainsController < ApplicationController
     params[:schedule_chain]["schedule_volunteers_attributes"].collect{ |k,v|
       delete_volunteers << v["id"].to_i if v["volunteer_id"].nil?
     } unless params[:schedule_chain]["schedule_volunteers_attributes"].nil?
-    if @schedule.update_attributes(params[:schedule_chain])
+    if @schedule.update_attributes(schedule_chain_params)
       @schedule.schedules.each{ |s|
         s.delete if delete_schedules.include? s.id
       }

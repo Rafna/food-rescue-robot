@@ -54,7 +54,7 @@ class FoodTypesController < ApplicationController
     @food_type = FoodType.find(params[:id])
     return unless check_permissions(@food_type)
     # can't set admin bits from CRUD controls
-    if @food_type.update_attributes(params[:food_type])
+    if @food_type.update_attributes(food_params)
       flash[:notice] = "Updated Successfully."
       unless session[:my_return_to].nil?
         redirect_to(session[:my_return_to])

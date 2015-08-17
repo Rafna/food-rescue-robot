@@ -127,7 +127,7 @@ class LocationsController < ApplicationController
     @location.populate_detailed_hours_from_form location_params
     return unless check_permissions(@location)
     # can't set admin bits from CRUD controls
-    if @location.update_attributes(params[:location])
+    if @location.update_attributes(location_params)
       flash[:notice] = "Updated Successfully."
       unless session[:my_return_to].nil?
         redirect_to session[:my_return_to]

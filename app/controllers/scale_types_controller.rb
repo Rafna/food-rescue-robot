@@ -55,7 +55,7 @@ class ScaleTypesController < ApplicationController
   def update
     @scale_type = ScaleType.find(params[:id])
     return unless check_permissions(@scale_type)
-    if @scale_type.update_attributes(params[:scale_type])
+    if @scale_type.update_attributes(scale_type_params)
       flash[:notice] = "Updated successfully."
       unless session[:my_return_to].nil?
         redirect_to(session[:my_return_to])

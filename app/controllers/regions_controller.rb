@@ -32,7 +32,7 @@ class RegionsController < ApplicationController
       redirect_to(root_path)
       return
     end
-    if @region.update_attributes(params[:region])
+    if @region.update_attributes(region_params)
       flash[:notice] = "Updated Successfully."
       render :edit
     else
