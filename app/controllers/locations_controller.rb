@@ -124,7 +124,7 @@ class LocationsController < ApplicationController
 
   def update
     @location = Location.find(params[:id])
-    @location.populate_detailed_hours_from_form location_params
+    @location.populate_detailed_hours_from_form days_params
     return unless check_permissions(@location)
     # can't set admin bits from CRUD controls
     if @location.update_attributes(location_params)
@@ -149,6 +149,21 @@ class LocationsController < ApplicationController
       :public_notes, :recip_category, :website, :receipt_key, :email, :phone, 
       :equipment_storage_info, :food_storage_info, :entry_info, :exit_info,
       :onsite_contact_info, :active, :location_type)
+  end
+
+  def days_params
+    sub_day_params = [:year, :month, :day, :hour, :minute]
+    day_params = [:status, {start: sub_day_params}, {end: sub_day_params}]
+    
+    params.permit(
+      day0: day_params,
+      day1: day_params,
+      day2: day_params,
+      day3: day_params,
+      day4: day_params,
+      day5: day_params,
+      day6: day_params
+    )
   end
 
 end 

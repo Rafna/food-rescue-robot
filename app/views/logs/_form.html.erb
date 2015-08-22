@@ -77,7 +77,7 @@
       $('#{ escape_javascript task }'.replace(/new_\\d+/g, new_id)).insertAfter($('.log_part').last());
       $('#'+new_id).on("change",function(){ update_total_weight(); });
 EOF
-      link_to_function "+ Add Another", func_str
+      link_to "+ Add Another", func_str
    %>
 </td></tr>
 <% if @scale_types.length != 1 %>
