@@ -60,7 +60,7 @@ class AbsencesController < ApplicationController
   end
 
   def create
-    @absence = Absence.new(params[:absence])
+    @absence = Absence.new(absence_params)
     @absence.volunteer ||= current_volunteer
     volunteer = @absence.volunteer
     vrids = volunteer.regions.collect{ |r| r.id }

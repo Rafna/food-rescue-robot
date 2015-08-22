@@ -97,7 +97,7 @@ class ScheduleChainsController < ApplicationController
   end
 
   def create
-    @schedule = ScheduleChain.new(params[:schedule_chain])
+    @schedule = ScheduleChain.new(schedule_chain_params)
     unless current_volunteer.any_admin? @schedule.region
       flash[:error] = "Not authorized to create schedule items for that region"
       redirect_to(root_path)

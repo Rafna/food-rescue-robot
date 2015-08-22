@@ -29,7 +29,7 @@ class ScaleTypesController < ApplicationController
   end
 
   def create
-    @scale_type = ScaleType.new(params[:scale_type])
+    @scale_type = ScaleType.new(scale_type_params)
     return unless check_permissions(@scale_type)
     if @scale_type.save
       flash[:notice] = "Created successfully."

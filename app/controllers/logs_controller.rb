@@ -152,7 +152,7 @@ class LogsController < ApplicationController
   end
 
   def create
-    @log = Log.new(params[:log])
+    @log = Log.new(log_params)
     @region = @log.region
     @food_types = @region.food_types.collect{ |e| [e.name,e.id] }
     @scale_types = @region.scale_types.collect{ |e| [e.name,e.id] }
