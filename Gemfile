@@ -40,9 +40,6 @@ gem 'twitter-bootstrap-rails'
 #gem 'bootstrap-sass', '~> 3.2.0'
 gem 'rails_bootstrap_navbar'
 
-# lets us use the ubiquitous jquery javascript library
-gem 'jquery-rails', '3.1.3'
-
 # dynamic in-place editing for some admin tables
 gem 'active_scaffold'
 
@@ -50,7 +47,7 @@ gem 'active_scaffold'
 gem 'geocoder'
 
 # handles authentication
-gem 'devise', '~> 3.4.0'
+gem 'devise', '~> 3.5.0'
 
 # alternative webserver (>thin start)
 gem 'thin'
@@ -70,10 +67,13 @@ gem 'prawn'
 gem 'gmaps4rails', "1.5.6"
 
 # lets us render charts in-browser
-gem "highcharts-rails", "~> 3.0.0"
+gem "highcharts-rails", "~> 4.1.0"
+
+# lets us use the ubiquitous jquery javascript library
+gem 'jquery-rails', '4.0.4'
 
 # gives us pretty data tables
-gem 'jquery-datatables-rails', "3.0.0"
+gem 'jquery-datatables-rails', "3.3.0"
 
 # pretty select form elements
 #gem 'select2-rails'
